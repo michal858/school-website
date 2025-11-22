@@ -18,6 +18,7 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFCATIONS'] = False
     app.secret_key = secret_key
 
+
     db.init_app(app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
@@ -29,6 +30,14 @@ def create_app():
     @login_manager.user_loader
     def load_user(uid):
         return User.query.get(int(uid))
+
+    from main_app.auth.routes import auth
+    from main_app.home.routes import home
+    from main_app.admin.routes import admin
+
+    app.register_blueprint(auth, url_prefix='/auth')
+    app.register_blueprint(home, url_prefix='/')
+    app.register_blueprint(admin, url_prefix='/admin')
 
 
 
