@@ -5,12 +5,12 @@ from .models import User
 
 auth = Blueprint('auth', __name__, template_folder='templates')
 
-@auth.route('/login', methods=['GET', 'POST'])
+@auth.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         if current_user.is_authenticated:
             return redirect(url_for('home.index'))
-        return render_template('auth/login')
+        return render_template('auth/login.html')
     elif request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
@@ -19,7 +19,10 @@ def login():
 
         if user and bcrypt.check_password_hash(user.password, password):
             login_user(user)
-            return redirect(url_for('home.index'))
+            if user.role == 'Admin':
+                return redirect(url_for('admin.dashboard'))
+            else:
+                return redirect(url_for('home.index'))
         else:
             return "Wrong Email or Password"
     else:
@@ -43,7 +46,7 @@ def signup():
 
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
-        user = User(firstName=firstName, lastName=lastName, password=hashed_password, email=email)
+        user = User(firstName=firstName, lastName=lastName, password=hashed_password, email=email, role='User')
 
         db.session.add(user)
         db.session.commit()
@@ -58,7 +61,7 @@ def forgot_password():
     return "Forgot password"
 
 
-@auth.logout('/logout')
+@auth.route('/logout')
 @login_required
 def logout():
     logout_user()
