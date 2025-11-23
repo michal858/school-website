@@ -27,7 +27,7 @@ def create_app():
 
     login_manager.login_view = 'auth.login'
 
-    from main_app.auth.models import User
+    from main_app.models import User
     @login_manager.user_loader
     def load_user(uid):
         return User.query.get(int(uid))
@@ -35,10 +35,14 @@ def create_app():
     from main_app.auth.routes import auth
     from main_app.home.routes import home
     from main_app.admin.routes import admin
+    from main_app.teacher.routes import teacher
+    from main_app.students.routes import students
 
     app.register_blueprint(auth, url_prefix='/auth')
     app.register_blueprint(home, url_prefix='/')
     app.register_blueprint(admin, url_prefix='/admin')
+    app.register_blueprint(teacher, url_prefix='/teacher')
+    app.register_blueprint(students, url_prefix='/student')
 
 
 
