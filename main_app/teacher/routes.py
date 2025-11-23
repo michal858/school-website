@@ -1,8 +1,7 @@
 from flask import Blueprint, render_template, url_for
 from flask_login import login_required
 from main_app.extensions import db
-from main_app.home.models import Lectures, LectureEnrollment
-from main_app.auth.models import User
+from main_app.models import Lectures, LectureEnrollment, User
 from main_app.roles import role_required
 
 teacher = Blueprint('teacher', __name__, template_folder='templates')
