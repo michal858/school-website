@@ -9,7 +9,12 @@ auth = Blueprint('auth', __name__, template_folder='templates')
 def login():
     if request.method == 'GET':
         if current_user.is_authenticated:
-            return redirect(url_for('home.index'))
+            if current_user.role == 'Admin':
+                return redirect(url_for('admin.dashboard'))
+            elif current_user.role == 'Teacher':
+                return redirect(url_for('teacher.dashboard'))
+            elif current_user.role == 'Student':
+                return redirect(url_for('students.dashboard'))
         return render_template('auth/login.html')
     elif request.method == 'POST':
         email = request.form.get('email')
@@ -21,8 +26,12 @@ def login():
             login_user(user)
             if user.role == 'Admin':
                 return redirect(url_for('admin.dashboard'))
+            elif user.role == 'Teacher':
+                return redirect(url_for('teacher.dashboard'))
+            elif user.role == 'Student':
+                return redirect(url_for('students.dashboard'))
             else:
-                return redirect(url_for('home.index'))
+                return "Unknown user role"
         else:
             return "Wrong Email or Password"
     else:
@@ -33,7 +42,12 @@ def login():
 def signup():
     if request.method == 'GET':
         if current_user.is_authenticated:
-            return redirect(url_for('home.index'))
+            if current_user.role == 'Admin':
+                return redirect(url_for('admin.dashboard'))
+            elif current_user.role == 'Teacher':
+                return redirect(url_for('teacher.dashboard'))
+            elif current_user.role == 'Student':
+                return redirect(url_for('students.dashboard'))
         return render_template('auth/signup.html')
     elif request.method == 'POST':
         firstName = request.form.get('firstName')
@@ -46,15 +60,22 @@ def signup():
 
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
-        user = User(firstName=firstName, lastName=lastName, password=hashed_password, email=email, role='User')
+        user = User(firstName=firstName, lastName=lastName, password=hashed_password, email=email)
 
         db.session.add(user)
         db.session.commit()
 
         login_user(user)
-        return redirect(url_for('home.index'))
+        if user.role == 'Admin':
+            return redirect(url_for('admin.dashboard'))
+        elif user.role == 'Teacher':
+            return redirect(url_for('teacher.dashboard'))
+        elif user.role == 'Student':
+            return redirect(url_for('students.dashboard'))
+        else:
+            return "Unknown user role"
 
-    return "Somthing went wrong"
+    return "Something went wrong"
 
 @auth.route('/forgot_password')
 def forgot_password():
