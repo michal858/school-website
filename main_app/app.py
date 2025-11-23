@@ -15,6 +15,7 @@ def create_app():
     db_host = os.getenv("DB_HOST")
 
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{db_username}:{db_password}@{db_host}/{db_name}'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
     app.config['SQLALCHEMY_TRACK_MODIFCATIONS'] = False
     app.secret_key = secret_key
 
@@ -22,7 +23,7 @@ def create_app():
     db.init_app(app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
-    migrate.init_app(app)
+    migrate.init_app(app, db)
 
     login_manager.login_view = 'auth.login'
 

@@ -5,8 +5,19 @@
   </head>
   <body>
     <h1>Welcome to School Web</h1>
-    <a href="{{ url_for('auth.login') }}">Login</a>
-    <a href="{{ url_for('auth.signup') }}">Signup</a>
-    <a href="{{ url_for('auth.logout') }}">Logout</a>
+    <h2>Home Page</h2>
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+      {% if current_user.role == 'Admin' %}
+        <a href="{{ url_for('admin.dashboard') }}">Admin Dashboard</a>
+      {% elif current_user.role == 'Teacher' %}
+        <a href="{{ url_for('teacher.dashboard') }}">Teacher Dashboard</a>
+      {% elif current_user.role == 'Student' %}
+        <a href="{{ url_for('students.dashboard') }}">Student Dashboard</a>
+      {% endif %}
+    {% else %}
+      <a href="{{ url_for('auth.login') }}">Login</a>
+      <a href="{{ url_for('auth.signup') }}">Signup</a>
+    {% endif %}
   </body>
 </html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Students</title>
+  </head>
+  <body>
+    <h1>Welcome to School Web</h1>
+    <h2>Students Page</h2>
+    <h2>Current User: {{ current_user.firstName }} {{ current_user.lastName }}</h2>
+    <a href="{{ url_for('auth.logout') }}">Logout</a>
+    
+  </body>
+</html>
