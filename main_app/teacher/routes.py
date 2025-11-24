@@ -5,14 +5,14 @@ from main_app.roles import role_required
 
 teacher = Blueprint('teacher', __name__, template_folder='templates')
 
-@teacher.route('/dashboard')
+@teacher.route('/')
 @role_required('Teacher')
 def dashboard():
     # lectures = db.session.query(Lectures).all()
     return render_template('teacher/dashboard.html')
 
 
-@teacher.route('/<int:lecture_id>/attendance')
+@teacher.route('/<int:lecture_id>/attendance', methods=['GET', 'POST'])
 @role_required('Teacher')
 def attendance(lecture_id):
     lecture = Lectures.query.get_or_404(lecture_id)

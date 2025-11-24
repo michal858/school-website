@@ -5,8 +5,8 @@ from main_app.roles import role_required
 
 students = Blueprint('students', __name__, template_folder='templates')
 
-@students.route('/dashboard')
-@role_required('Student')
+@students.route('/')
+@role_required('Student', methods=['GET', 'POST'])
 def dashboard():
     return render_template('students/dashboard.html', current_user=current_user)
 
