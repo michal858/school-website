@@ -8,6 +8,8 @@
     <h2>Students Page</h2>
     <h2>Current User: {{ current_user.firstName }} {{ current_user.lastName }}</h2>
     <a href="{{ url_for('auth.logout') }}">Logout</a>
-    
+    <a href="{{ url_for('students.pick_lecture') }}">Pick Lectures</a>
+    <a href="{{ url_for('students.enrolled_lectures') }}">Enrolled Lectures</a>
+
   </body>
 </html>
