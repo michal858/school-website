@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Students</title>
-  </head>
-  <body>
-    <h1>Welcome to School Web</h1>
-    <h2>Students Page</h2>
-    <h2>Current User: {{ current_user.firstName }} {{ current_user.lastName }}</h2>
-    <a href="{{ url_for('auth.logout') }}">Logout</a>
-    <a href="{{ url_for('students.pick_lecture') }}">Pick Lectures</a>
-    <a href="{{ url_for('students.enrolled_lectures') }}">Enrolled Lectures</a>
+{% extends "base.html" %}
 
-  </body>
-</html>
+{% block title %}Uczniowie{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+{% endblock %}
+
+{% block content %}
+<h2>Zalogowano jako: {{ current_user.firstName }} {{ current_user.lastName }}</h2>
+{% endblock %}

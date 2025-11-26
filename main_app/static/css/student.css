@@ -1,0 +1,60 @@
+h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.8s ease;
+}
+
+h2:last-of-type {
+    background: white;
+    padding: 1.25rem 1.75rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    border-left: 4px solid #667eea;
+    display: inline-block;
+    color: #1e293b;
+    animation: fadeInUp 1s ease;
+}
+
+h2:last-of-type::before {
+    content: '👤 ';
+    margin-right: 0.5rem;
+}
+
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    h2:last-of-type {
+        padding: 1rem 1.25rem;
+        display: block;
+    }
+
+    a[href*="logout"] {
+        width: 100%;
+        text-align: center;
+    }
+}

@@ -1,40 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users</title>
-</head>
-<body>
-    <h1>Users</h1>
-    <a href="{{ url_for('admin.add_user') }}">Add User</a>
-    {% if users %}
-    <table>
-        <thead>
-            <tr>
-                <th>UID</th>
-                <th>Username</th>
-                <th>Role</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in users %}
-            <tr>
-                <td>{{ user.firstName }}</td>
-                <td>{{ user.lastName }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.role }}</td>
-                <td>
-                    <a href="{{ url_for('admin.edit_user', uid=user.uid) }}">Edit</a>
-                    <a href="{{ url_for('admin.delete_user', uid=user.uid) }}">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>No users found</p>
-    {% endif %}
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Uzytkownicy{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block content %}
+<h1>Uzytkownicy</h1>
+<a href="{{ url_for('admin.add_user') }}">Dodaj uzytkownikow</a>
+{% if users %}
+<table>
+    <thead>
+        <tr>
+            <th>UID</th>
+            <th>Nazwa uzytkownika</th>
+            <th>Permisje</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>
+                <a href="{{ url_for('admin.edit_user', uid=user.uid) }}">Edytuj</a>
+                <a href="{{ url_for('admin.delete_user', uid=user.uid) }}">Usun</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Nie znaleziono zadnych uzytkownikow</p>
+{% endif %}
+{% endblock %}

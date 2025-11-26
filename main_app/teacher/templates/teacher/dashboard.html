@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Teacher Dashboard</title>
-</head>
-<body>
-    <h1>Teacher Dashboard</h1>
-    <h2>Current User: {{ current_user.firstName }} {{ current_user.lastName }}</h2>
-    <a href="{{ url_for('auth.logout') }}">Logout</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Panel Sterowania{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/teacher.css') }}">
+{% endblock %}
+
+{% block content %}
+<h1>Panel Sterowania</h1>
+<h2>Zalogowano jako: {{ current_user.firstName }} {{ current_user.lastName }}</h2>
+{% endblock %}
