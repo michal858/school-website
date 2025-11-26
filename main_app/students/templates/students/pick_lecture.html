@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick Lecture</title>
+</head>
+<body>
+    <h1>Pick Lecture</h1>
+    <form action="{{ url_for('students.pick_lecture') }}" method="post">
+        <select name="lecture" id="lecture">
+            {% for lecture in lectures %}
+            <option value="{{ lecture.lid }}">{{ lecture.title }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Pick Lecture</button>
+    </form>
+</body>
+</html>

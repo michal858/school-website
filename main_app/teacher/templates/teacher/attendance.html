@@ -1,187 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Attendance - {{ lecture.title }}</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+{% extends "base.html" %}
 
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        padding: 20px;
-      }
+{% block title %}Obecnosc - {{ lecture.title }}{% endblock %}
 
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-      }
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/teacher.css') }}">
+{% endblock %}
 
-      .header {
-        background: rgba(255, 255, 255, 0.95);
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        margin-bottom: 30px;
-      }
-
-      .header h1 {
-        color: #333;
-        font-size: 2rem;
-        margin-bottom: 10px;
-      }
-
-      .header p {
-        color: #666;
-        font-size: 1.1rem;
-      }
-
-      .back-link {
-        display: inline-block;
-        color: #667eea;
-        text-decoration: none;
-        margin-bottom: 15px;
-        font-weight: 600;
-        transition: transform 0.2s;
-      }
-
-      .back-link:hover {
-        transform: translateX(-5px);
-      }
-
-      .students-card {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 15px;
-        padding: 30px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-      }
-
-      .students-card h2 {
-        color: #333;
-        margin-bottom: 20px;
-        font-size: 1.5rem;
-      }
-
-      .student-count {
-        display: inline-block;
-        background: #667eea;
-        color: white;
-        padding: 5px 15px;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        margin-left: 10px;
-      }
-
-      .students-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-      }
-
-      .students-table thead {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-      }
-
-      .students-table th {
-        padding: 15px;
-        text-align: left;
-        font-weight: 600;
-      }
-
-      .students-table tbody tr {
-        border-bottom: 1px solid #e0e0e0;
-        transition: background-color 0.2s;
-      }
-
-      .students-table tbody tr:hover {
-        background-color: #f5f5f5;
-      }
-
-      .students-table td {
-        padding: 15px;
-        color: #333;
-      }
-
-      .no-students {
-        text-align: center;
-        padding: 40px;
-        color: #666;
-        font-size: 1.1rem;
-      }
-
-      .no-students-icon {
-        font-size: 3rem;
-        margin-bottom: 15px;
-        opacity: 0.5;
-      }
-
-      @media (max-width: 768px) {
-        .students-table {
-          font-size: 0.9rem;
-        }
-
-        .students-table th,
-        .students-table td {
-          padding: 10px;
-        }
-
-        .header h1 {
-          font-size: 1.5rem;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="header">
-        <a href="{{ url_for('teacher.dashboard') }}" class="back-link"
-          >← Back to Dashboard</a
-        >
+{% block content %}
+<div class="container">
+    <div class="header">
+        <a href="{{ url_for('teacher.dashboard') }}" class="back-link">← Panel Sterowania</a>
         <h1>{{ lecture.title }}</h1>
-        <p>Attendance and Enrollment</p>
-      </div>
+        <p>Obecnosc</p>
+    </div>
 
-      <div class="students-card">
+    <div class="students-card">
         <h2>
-          Enrolled Students
-          <span class="student-count">{{ enrolled_students|length }}</span>
+            Zapisani ucznowie
+            <span class="student-count">{{ enrolled_students|length }}</span>
         </h2>
 
         {% if enrolled_students %}
         <table class="students-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for student in enrolled_students %}
-            <tr>
-              <td>{{ loop.index }}</td>
-              <td>{{ student.firstName or '-' }}</td>
-              <td>{{ student.lastName }}</td>
-              <td>{{ student.email }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Imie</th>
+                    <th>Nazwisko</th>
+                    <th>Adres e-mail</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in enrolled_students %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ student.firstName or '-' }}</td>
+                    <td>{{ student.lastName }}</td>
+                    <td>{{ student.email }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
         {% else %}
         <div class="no-students">
-          <div class="no-students-icon">📋</div>
-          <p>No students are currently enrolled in this lecture.</p>
+            <div class="no-students-icon">📋</div>
+            <p>Zaden z uczniow nie zapisal sie na ten wyklad</p>
         </div>
         {% endif %}
-      </div>
     </div>
-  </body>
-</html>
+</div>
+{% endblock %}

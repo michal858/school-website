@@ -39,8 +39,11 @@ class LectureEnrollment(db.Model):
     __tablename__ = 'lecture_enrollment'
 
     leid = db.Column(db.Integer, primary_key=True)
-    lecture_id = db.Column(db.Integer, nullable=False)
+    lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.lid'), nullable=False)
     user_id = db.Column(db.Integer, nullable=False)
+
+    # Relationship to access the lecture details
+    lecture = db.relationship('Lectures', backref='enrollments')
 
     def __repr__(self):
         return f"<LectureEnrollment: {self.user_id} {self.lecture_id}>"
