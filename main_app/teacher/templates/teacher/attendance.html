@@ -1,52 +1,54 @@
-{% extends "base.html" %}
-
-{% block title %}Obecnosc - {{ lecture.title }}{% endblock %}
-
-{% block extra_css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/teacher.css') }}">
-{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Obecnosc - {{ lecture.title }}{%
+endblock %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/teacher.css') }}"
+/>
+{% endblock %} {% block content %}
 <div class="container">
-    <div class="header">
-        <a href="{{ url_for('teacher.dashboard') }}" class="back-link">← Panel Sterowania</a>
-        <h1>{{ lecture.title }}</h1>
-        <p>Obecnosc</p>
-    </div>
+  <div class="header">
+    <a href="{{ url_for('teacher.dashboard') }}" class="back-link"
+      >← Panel Sterowania</a
+    >
+    <h1>{{ lecture.title }}</h1>
+    <p>Obecnosc</p>
+  </div>
 
-    <div class="students-card">
-        <h2>
-            Zapisani ucznowie
-            <span class="student-count">{{ enrolled_students|length }}</span>
-        </h2>
+  <div class="students-card">
+    <h2>
+      Zapisani ucznowie
+      <span class="student-count">{{ enrolled_students|length }}</span>
+    </h2>
 
-        {% if enrolled_students %}
-        <table class="students-table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Imie</th>
-                    <th>Nazwisko</th>
-                    <th>Adres e-mail</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for student in enrolled_students %}
-                <tr>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ student.firstName or '-' }}</td>
-                    <td>{{ student.lastName }}</td>
-                    <td>{{ student.email }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <div class="no-students">
-            <div class="no-students-icon">📋</div>
-            <p>Zaden z uczniow nie zapisal sie na ten wyklad</p>
-        </div>
-        {% endif %}
+    {% if enrolled_students %}
+    <div class="table-responsive">
+      <table class="students-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Imie</th>
+            <th>Nazwisko</th>
+            <th>Adres e-mail</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for student in enrolled_students %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ student.firstName or '-' }}</td>
+            <td>{{ student.lastName }}</td>
+            <td>{{ student.email }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
+    {% else %}
+    <div class="no-students">
+      <div class="no-students-icon">📋</div>
+      <p>Zaden z uczniow nie zapisal sie na ten wyklad</p>
+    </div>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

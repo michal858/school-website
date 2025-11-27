@@ -1,17 +1,80 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Strona glowna{% endblock %} {% block
+extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/home.css') }}"
+/>
+{% endblock %} {% block content %} {% if current_user.is_authenticated %}
+<section class="home-authenticated">
+  <div class="user-info">
+    <h1>Witaj, {{ current_user.firstName }} {{ current_user.lastName }}!</h1>
+    <span class="user-role">{{ current_user.role }}</span>
+  </div>
 
-{% block title %}Strona glowna{% endblock %}
+  <p>Zalogowano pomyslnie do systemu zarzadzania szkola.</p>
 
-{% block extra_css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-{% endblock %}
+  {% if current_user.role == 'Admin' %}
+  <a href="{{ url_for('admin.dashboard') }}" class="dashboard-link"
+    >Przejdz do Panelu Administratora</a
+  >
+  {% elif current_user.role == 'Teacher' %}
+  <a href="{{ url_for('teacher.dashboard') }}" class="dashboard-link"
+    >Przejdz do Panelu Nauczyciela</a
+  >
+  {% elif current_user.role == 'Student' %}
+  <a href="{{ url_for('students.dashboard') }}" class="dashboard-link"
+    >Przejdz do Panelu Ucznia</a
+  >
+  {% endif %}
+</section>
 
-{% block content %}
-{% if current_user.is_authenticated %}
-    <div></div>
+<section class="home-features">
+  <div class="feature-card">
+    <div class="feature-icon">📚</div>
+    <h3>Wyklady</h3>
+    <p>Zarzadzaj wykladami i materiałami edukacyjnymi</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">👥</div>
+    <h3>Uzytkownicy</h3>
+    <p>System dla uczniow, nauczycieli i administratorow</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">📊</div>
+    <h3>Obecnosc</h3>
+    <p>Sledzenie obecnosci i postepow w nauce</p>
+  </div>
+</section>
 {% else %}
-    <h2>Zaloguj sie lub zarejestruj</h2>
-    <a href="{{ url_for('auth.login') }}">Logowanie</a>
-    <a href="{{ url_for('auth.signup') }}">Rejestracja</a>
-{% endif %}
-{% endblock %}
+<section class="home-hero">
+  <h1>SchoolWeb</h1>
+  <h2>System Zarzadzania Szkola</h2>
+  <p>
+    Nowoczesna platforma do zarzadzania wykladami, uzytkownikami i obecnoscia.
+    Zaloguj sie lub zarejestruj, aby rozpoczac.
+  </p>
+
+  <div class="home-actions">
+    <a href="{{ url_for('auth.login') }}">Zaloguj sie</a>
+    <a href="{{ url_for('auth.signup') }}" class="secondary">Zarejestruj sie</a>
+  </div>
+</section>
+
+<section class="home-features">
+  <div class="feature-card">
+    <div class="feature-icon">🎓</div>
+    <h3>Dla Uczniow</h3>
+    <p>Zapisuj sie na wyklady i sledz swoje postepy</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">👨‍🏫</div>
+    <h3>Dla Nauczycieli</h3>
+    <p>Zarzadzaj wykladami i monitoruj obecnosc</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">⚙️</div>
+    <h3>Dla Administratorow</h3>
+    <p>Pelna kontrola nad systemem i uzytkownikami</p>
+  </div>
+</section>
+{% endif %} {% endblock %}

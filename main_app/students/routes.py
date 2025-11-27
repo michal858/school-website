@@ -38,8 +38,14 @@ def pick_lecture():
 @students.route('/enrolled_lectures')
 @role_required('Student')
 def enrolled_lectures():
-    enrolled_lectures = LectureEnrollment.query.filter_by(user_id=current_user.uid).all()
-    return render_template('students/enrolled_lectures.html', enrolled_lectures=enrolled_lectures)
+    search_query = request.args.get('q', '')
+    query = LectureEnrollment.query.filter_by(user_id=current_user.uid).join(Lectures)
+
+    if search_query:
+        query = query.filter(Lectures.title.ilike(f'%{search_query}%'))
+
+    enrolled_lectures = query.all()
+    return render_template('students/enrolled_lectures.html', enrolled_lectures=enrolled_lectures, search_query=search_query)
 
 
 @students.route('/enrolled_lectures/edit/<int:leid>', methods=['GET', 'POST'])

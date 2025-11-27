@@ -1,20 +1,24 @@
-admin_add_lecture.html
-
-{% extends "base.html" %}
-
-{% block title %}Dodaj wyklad{% endblock %}
-
-{% block extra_css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-{% endblock %}
-
-{% block content %}
-<h1>Add Lecture</h1>
-<form method="POST">
+{% extends "base.html" %} {% block title %}Dodaj wyklad{% endblock %} {% block
+extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/admin.css') }}"
+/>
+{% endblock %} {% block content %}
+<div
+  style="
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  "
+>
+  <h1 class="page-title">Dodaj wyklad</h1>
+  <form method="POST">
     <label for="title">Tytul:</label>
-    <input type="text" id="title" name="title" required>
-    <br>
+    <input type="text" id="title" name="title" required />
     <button type="submit">Dodaj wyklad</button>
-</form>/form>
-<a href="{{ url_for('admin.lectures') }}">Wroc do wykladow</a>
+  </form>
+  <a href="{{ url_for('admin.lectures') }}">Wroc do wykladow</a>
+</div>
 {% endblock %}

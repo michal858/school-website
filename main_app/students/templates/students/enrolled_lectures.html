@@ -1,37 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Enrolled Lectures</title>
-  </head>
-  <body>
-    <h1>Enrolled Lectures</h1>
-    <a href="{{ url_for('students.dashboard') }}">Back to Dashboard</a>
-    {% if enrolled_lectures %}
-    <table>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for enrolled_lecture in enrolled_lectures %}
-        <tr>
-          <td>{{ enrolled_lecture.lecture.title }}</td>
-          <td>
-            <a
-              href="{{ url_for('students.edit_enrolled_lecture', leid=enrolled_lecture.leid) }}"
-              >Edit</a
-            >
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% else %}
-    <p>No lectures found</p>
-    {% endif %}
-  </body>
-</html>
+{% extends "base.html" %} {% block title %}Zapisane Wyklady{% endblock %} {%
+block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/admin.css') }}"
+/>
+{% endblock %} {% block content %}
+<h1 class="page-title">Zapisane Wyklady</h1>
+<div
+  class="actions-bar"
+  style="
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  "
+>
+  <a
+    href="{{ url_for('students.pick_lecture') }}"
+    class="btn-add"
+    style="margin-bottom: 0"
+    >Dodaj wyklad</a
+  >
+
+  <form
+    action="{{ url_for('students.enrolled_lectures') }}"
+    method="get"
+    style="
+      display: flex;
+      gap: 0.5rem;
+      margin: 0;
+      padding: 0;
+      box-shadow: none;
+      background: transparent;
+      max-width: none;
+    "
+  >
+    <input
+      type="text"
+      name="q"
+      placeholder="Szukaj wykladu..."
+      value="{{ search_query }}"
+      style="margin: 0; width: 250px"
+    />
+    <button
+      type="submit"
+      style="margin: 0; width: auto; padding: 0.75rem 1.5rem"
+    >
+      Szukaj
+    </button>
+  </form>
+</div>
+
+{% if enrolled_lectures %}
+<div class="table-responsive">
+  <table>
+    <thead>
+      <tr>
+        <th>Tytul</th>
+        <th>Akcje</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for enrolled_lecture in enrolled_lectures %}
+      <tr>
+        <td>{{ enrolled_lecture.lecture.title }}</td>
+        <td>
+          <a
+            href="{{ url_for('students.edit_enrolled_lecture', leid=enrolled_lecture.leid) }}"
+            >Edytuj</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p>Nie znaleziono zadnych wykladow</p>
+{% endif %} {% endblock %}

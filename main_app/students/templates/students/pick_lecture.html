@@ -1,19 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pick Lecture</title>
-</head>
-<body>
-    <h1>Pick Lecture</h1>
-    <form action="{{ url_for('students.pick_lecture') }}" method="post">
-        <select name="lecture" id="lecture">
-            {% for lecture in lectures %}
-            <option value="{{ lecture.lid }}">{{ lecture.title }}</option>
-            {% endfor %}
-        </select>
-        <button type="submit">Pick Lecture</button>
-    </form>
-</body>
-</html>
+{% extends "base.html" %} {% block title %}Wybierz Wyklad{% endblock %} {% block
+extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/admin.css') }}"
+/>
+{% endblock %} {% block content %}
+<div
+  style="
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  "
+>
+  <h1>Wybierz Wyklad</h1>
+  <a href="{{ url_for('students.dashboard') }}" style="margin-bottom: 2rem"
+    >Powrot do Panelu</a
+  >
+
+  <form
+    action="{{ url_for('students.pick_lecture') }}"
+    method="post"
+    style="width: 100%"
+  >
+    <label for="lecture">Dostepne wyklady:</label>
+    <select name="lecture" id="lecture" required>
+      {% for lecture in lectures %}
+      <option value="{{ lecture.lid }}">{{ lecture.title }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Zapisz sie na wyklad</button>
+  </form>
+</div>
+{% endblock %}
