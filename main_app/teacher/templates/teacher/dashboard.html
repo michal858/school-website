@@ -1,12 +1,24 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Panel Nauczyciela{% endblock %} {%
+block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/teacher.css') }}"
+/>
+{% endblock %} {% block content %}
+<section class="dashboard-section">
+  <h1>Panel Sterowania Nauczyciela</h1>
+  <h2>
+    Zalogowano jako: {{ current_user.firstName }} {{ current_user.lastName }}
+  </h2>
 
-{% block title %}Panel Sterowania{% endblock %}
-
-{% block extra_css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/teacher.css') }}">
-{% endblock %}
-
-{% block content %}
-<h1>Panel Sterowania</h1>
-<h2>Zalogowano jako: {{ current_user.firstName }} {{ current_user.lastName }}</h2>
+  <div class="lectures-info">
+    <p>
+      Tutaj beda wyswietlane Twoje wyklady i narzedzia do zarzadzania
+      obecnoscia.
+    </p>
+    <a href="{{ url_for('teacher.lectures') }}" class="back-link"
+      >Moje Wykłady</a
+    >
+  </div>
+</section>
 {% endblock %}

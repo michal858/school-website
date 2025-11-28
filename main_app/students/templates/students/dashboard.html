@@ -1,11 +1,28 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Panel Ucznia{% endblock %} {% block
+extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/student.css') }}"
+/>
+{% endblock %} {% block content %}
+<section class="dashboard-section">
+  <h1>Panel Ucznia</h1>
+  <h2>
+    Zalogowano jako: {{ current_user.firstName }} {{ current_user.lastName }}
+  </h2>
 
-{% block title %}Uczniowie{% endblock %}
-
-{% block extra_css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
-{% endblock %}
-
-{% block content %}
-<h2>Zalogowano jako: {{ current_user.firstName }} {{ current_user.lastName }}</h2>
+  <nav class="dashboard-nav" aria-label="Nawigacja panelu ucznia">
+    <a href="{{ url_for('students.pick_lecture') }}" class="dashboard-link">
+      <span class="link-icon">➕</span>
+      <span>Zapisz sie na wyklad</span>
+    </a>
+    <a
+      href="{{ url_for('students.enrolled_lectures') }}"
+      class="dashboard-link"
+    >
+      <span class="link-icon">📚</span>
+      <span>Moje wyklady</span>
+    </a>
+  </nav>
+</section>
 {% endblock %}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lectures</title>
+</head>
+<body>
+    <h1>Lectures</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Lecture Name</th>
+                <th>Check Attendance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lecture in lectures %}
+            <tr>
+                <td>{{ lecture.title }}</td>
+                <td><a href="{{ url_for('teacher.attendance', lecture_id=lecture.lid) }}">Check Attendance</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

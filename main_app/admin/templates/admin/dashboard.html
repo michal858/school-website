@@ -1,14 +1,23 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Panel Sterowania{% endblock %} {%
+block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/admin.css') }}"
+/>
+{% endblock %} {% block content %}
+<section class="dashboard-section">
+  <h1>Panel Sterowania Administratora</h1>
+  <p>Witaj, {{ current_user.firstName }} {{ current_user.lastName }}</p>
 
-{% block title %}Panel Sterowania{% endblock %}
-
-{% block extra_css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-{% endblock %}
-
-{% block content %}
-<h1>Panel Sterowania Administratora</h1>
-<p>Welcome, {{ current_user.firstName }}</p>
-<a href="{{ url_for('admin.users') }}">Uczniowie</a>
-<a href="{{ url_for('admin.lectures') }}">Wyklady</a>
+  <nav class="dashboard-nav" aria-label="Nawigacja panelu administratora">
+    <a href="{{ url_for('admin.users') }}" class="dashboard-link">
+      <span class="link-icon">👥</span>
+      <span>Uzytkownicy</span>
+    </a>
+    <a href="{{ url_for('admin.lectures') }}" class="dashboard-link">
+      <span class="link-icon">📚</span>
+      <span>Wyklady</span>
+    </a>
+  </nav>
+</section>
 {% endblock %}

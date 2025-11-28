@@ -12,11 +12,28 @@ def dashboard():
 
 
 # Users
+from sqlalchemy import or_
+
 @admin.route('users')
 @role_required('Admin')
 def users():
-    users = User.query.order_by(User.uid).all()
-    return render_template('admin/users.html', users=users)
+    page = request.args.get('page', 1, type=int)
+    search_query = request.args.get('q', '')
+
+    query = User.query
+
+    if search_query:
+        search_term = f"%{search_query}%"
+        query = query.filter(
+            or_(
+                User.firstName.ilike(search_term),
+                User.lastName.ilike(search_term),
+                User.email.ilike(search_term)
+            )
+        )
+
+    users = query.order_by(User.uid).paginate(page=page, per_page=50)
+    return render_template('admin/users.html', users=users, search_query=search_query)
 
 # Edit User
 @admin.route('users/edit/<int:uid>', methods=['GET', 'POST'])
@@ -83,8 +100,17 @@ def add_user():
 @admin.route('lectures')
 @role_required('Admin')
 def lectures():
-    lectures = Lectures.query.order_by(Lectures.lid).all()
-    return render_template('admin/lectures.html', lectures=lectures)
+    page = request.args.get('page', 1, type=int)
+    search_query = request.args.get('q', '')
+
+    query = Lectures.query
+
+    if search_query:
+        search_term = f"%{search_query}%"
+        query = query.filter(Lectures.title.ilike(search_term))
+
+    lectures = query.order_by(Lectures.lid).paginate(page=page, per_page=50)
+    return render_template('admin/lectures.html', lectures=lectures, search_query=search_query)
 
 # Edit Lecture
 @admin.route('lectures/edit/<int:lid>', methods=['GET', 'POST'])

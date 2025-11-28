@@ -1,37 +1,124 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Wyklady{% endblock %} {% block
+extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/admin.css') }}"
+/>
+{% endblock %} {% block content %}
+<h1 class="page-title">Wyklady</h1>
+<div
+  class="actions-bar"
+  style="
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  "
+>
+  <a href="{{ url_for('admin.add_lecture') }}" style="margin-bottom: 0"
+    >Dodaj wyklad</a
+  >
 
-{% block title %}Wyklady{% endblock %}
+  <form
+    action="{{ url_for('admin.lectures') }}"
+    method="get"
+    style="
+      display: flex;
+      gap: 0.5rem;
+      margin: 0;
+      padding: 0;
+      box-shadow: none;
+      background: transparent;
+      max-width: none;
+    "
+  >
+    <input
+      type="text"
+      name="q"
+      placeholder="Szukaj wykladu..."
+      value="{{ search_query }}"
+      style="margin: 0; width: 250px"
+    />
+    <button
+      type="submit"
+      style="margin: 0; width: auto; padding: 0.75rem 1.5rem"
+    >
+      Szukaj
+    </button>
+  </form>
+</div>
 
-{% block extra_css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-{% endblock %}
-
-{% block content %}
-<h1>Wyklady</h1>
-<a href="{{ url_for('admin.add_lecture') }}">Dodaj wyklad</a>
-{% if lectures %}
-<table>
+{% if lectures.items %}
+<div class="table-responsive">
+  <table>
     <thead>
-        <tr>
-            <th>ID</th>
-            <th>Tytul</th>
-            <th>Akcje</th>
-        </tr>
+      <tr>
+        <th>ID</th>
+        <th>Tytul</th>
+        <th>Akcje</th>
+      </tr>
     </thead>
     <tbody>
-        {% for lecture in lectures %}
-        <tr>
-            <td>{{ lecture.lid }}</td>
-            <td>{{ lecture.title }}</td>
-            <td>
-                <a href="{{ url_for('admin.edit_lecture', lid=lecture.lid) }}">Edytuj</a>
-                <a href="{{ url_for('admin.delete_lecture', lid=lecture.lid) }}">Usun</a>
-            </td>
-        </tr>
-        {% endfor %}
+      {% for lecture in lectures.items %}
+      <tr>
+        <td>{{ lecture.lid }}</td>
+        <td>{{ lecture.title }}</td>
+        <td>
+          <a href="{{ url_for('admin.edit_lecture', lid=lecture.lid) }}"
+            >Edytuj</a
+          >
+          <a href="{{ url_for('admin.delete_lecture', lid=lecture.lid) }}"
+            >Usun</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
     </tbody>
-</table>
+  </table>
+</div>
+
+<!-- Pagination Controls -->
+<div
+  class="pagination"
+  style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem"
+>
+  {% if lectures.has_prev %}
+  <a
+    href="{{ url_for('admin.lectures', page=lectures.prev_num, q=search_query) }}"
+    style="
+      padding: 0.5rem 1rem;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      color: #1e293b;
+    "
+    >&laquo; Poprzednia</a
+  >
+  {% endif %}
+
+  <span style="padding: 0.5rem 1rem; color: #64748b"
+    >Strona {{ lectures.page }} z {{ lectures.pages }}</span
+  >
+
+  {% if lectures.has_next %}
+  <a
+    href="{{ url_for('admin.lectures', page=lectures.next_num, q=search_query) }}"
+    style="
+      padding: 0.5rem 1rem;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      color: #1e293b;
+    "
+    >Nastepna &raquo;</a
+  >
+  {% endif %}
+</div>
+
 {% else %}
 <p>Nie znaleziono zadnych wykladow</p>
-{% endif %}
-{% endblock %}
+{% endif %} {% endblock %}

@@ -1,33 +1,7 @@
-{% extends "base.html" %}
-
-{% block title %}Edytuj uzytkownika{% endblock %}
-
-{% block extra_css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-{% endblock %}
-
-{% block content %}
-<h1>Edytuj uzytkownika</h1>
-<form method="POST">
-    <label for="firstName">Imie:</label>
-    <input type="text" id="firstName" name="firstName" value="{{ user.firstName }}">
-    <br>
-    <label for="lastName">Nazwisko:</label>
-    <input type="text" id="lastName" name="lastName" value="{{ user.lastName }}">
-    <br>
-    <label for="email">Adres e-mail:</label>
-    <input type="email" id="email" name="email" value="{{ user.email }}">
-    <br>
-    <label for="password">Haslo:</label>
-    <input type="password" id="password" name="password" placeholder="Type new password to update">
-    <br>
-    <label for="role">Permisje:</label>
-    <select id="role" name="role">
-        <option value="Admin" {% if user.role == 'Admin' %}selected{% endif %}>Administrator</option>
-        <option value="Teacher" {% if user.role == 'Teacher' %}selected{% endif %}>Nauczyciel</option>
-        <option value="Student" {% if user.role == 'Student' %}selected{% endif %}>Uczen</option>
-    </select>
-    <br>
-    <button type="submit">Aktualizuj</button>
-</form>
-{% endblock %}
+{% extends "base.html" %} {% block title %}Edytuj uzytkownika{% endblock %} {%
+block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/admin.css') }}"
+/>
+{% endblock %} {% block content %} {% endblock %}
