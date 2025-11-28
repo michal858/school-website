@@ -1,27 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lectures</title>
-</head>
-<body>
-    <h1>Lectures</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Lecture Name</th>
-                <th>Check Attendance</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for lecture in lectures %}
-            <tr>
-                <td>{{ lecture.title }}</td>
-                <td><a href="{{ url_for('teacher.attendance', lecture_id=lecture.lid) }}">Check Attendance</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Wyklady{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/teacher.css') }}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="header">
+        <h1>Wyklady</h1>
+        <p>Zarzadzaj obecnoscia na wykladzie</p>
+    </div>
+
+    <div class="lectures-list-card">
+        {% if lectures %}
+        <table class="lectures-list-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tytul wykladu</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lecture in lectures %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ lecture.title }}</td>
+                    <td>
+                        <a href="{{ url_for('teacher.attendance', lecture_id=lecture.lid) }}" class="attendance-btn">
+                            Sprawdz Obecnosc
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="no-lectures">
+            <div class="no-lectures-icon">📚</div>
+            <p>Nie posiadasz zadnych przypisanych wykladow.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
