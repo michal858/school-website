@@ -50,3 +50,21 @@ class LectureEnrollment(db.Model):
 
     def get_id(self):
         return self.leid
+
+
+class Attendance(db.Model):
+    __tablename__ = 'attendance'
+
+    aid = db.Column(db.Integer, primary_key=True)
+    lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.lid'), nullable=False)
+    user_id = db.Column(db.Integer, nullable=False)
+    attendance = db.Column(db.String(50), nullable=False, default='obecny')
+
+    # Relationship to access the lecture details
+    lecture = db.relationship('Lectures', backref='attendance')
+
+    def __repr__(self):
+        return f"<Attendance: {self.user_id} {self.lecture_id}>"
+
+    def get_id(self):
+        return self.aid

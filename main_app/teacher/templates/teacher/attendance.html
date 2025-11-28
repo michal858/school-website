@@ -22,26 +22,38 @@ endblock %} {% block extra_css %}
 
     {% if enrolled_students %}
     <div class="table-responsive">
-      <table class="students-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Imie</th>
-            <th>Nazwisko</th>
-            <th>Adres e-mail</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for student in enrolled_students %}
-          <tr>
-            <td>{{ loop.index }}</td>
-            <td>{{ student.firstName or '-' }}</td>
-            <td>{{ student.lastName }}</td>
-            <td>{{ student.email }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <form method="POST">
+        <table class="students-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Imie</th>
+              <th>Nazwisko</th>
+              <th>Obecnosc</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for student in enrolled_students %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ student.firstName}}</td>
+              <td>{{ student.lastName }}</td>
+              <td>
+                <select
+                  name="attendance_{{ student.uid }}"
+                  id="attendance_{{ student.uid }}"
+                >
+                  <option value="obecny" {% if attendance_map.get(student.uid) == 'obecny' %}selected{% endif %}>Obecny</option>
+                  <option value="nieobecny" {% if attendance_map.get(student.uid) == 'nieobecny' %}selected{% endif %}>Nieobecny</option>
+                  <option value="zwolniony" {% if attendance_map.get(student.uid) == 'zwolniony' %}selected{% endif %}>Zwolniony</option>
+                </select>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <button type="submit">Zapisz</button>
+      </form>
     </div>
     {% else %}
     <div class="no-students">
