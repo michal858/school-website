@@ -4,7 +4,7 @@ import os
 from .extensions import db, bcrypt, login_manager, migrate
 
 
-def create_app():
+def create_app(test_config=None):
     app = Flask(__name__, template_folder='templates', static_folder='static')
 
     load_dotenv()
@@ -18,6 +18,9 @@ def create_app():
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.secret_key = secret_key
+
+    if test_config:
+        app.config.update(test_config)
 
 
     db.init_app(app)

@@ -72,6 +72,9 @@ extra_css %}
           <a href="{{ url_for('admin.delete_lecture', lid=lecture.lid) }}"
             >Usun</a
           >
+          <a href="{{ url_for('admin.manage_rooms', lid=lecture.lid) }}"
+            >Zarzadzaj Salami</a
+          >
         </td>
       </tr>
       {% endfor %}
