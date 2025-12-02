@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %}Wybierz Wyklad{% endblock %} {% block
+{% extends "base.html" %} {% block title %}Wybierz Wykład{% endblock %} {% block
 extra_css %}
 <link
   rel="stylesheet"
@@ -13,9 +13,9 @@ extra_css %}
     width: 100%;
   "
 >
-  <h1>Wybierz Wyklad</h1>
+  <h1>Wybierz Wykład</h1>
   <a href="{{ url_for('students.dashboard') }}" style="margin-bottom: 2rem"
-    >Powrot do Panelu</a
+    >Powrót do Panelu</a
   >
 
   <form
@@ -23,13 +23,13 @@ extra_css %}
     method="post"
     style="width: 100%"
   >
-    <label for="lecture">Dostepne wyklady:</label>
+    <label for="lecture">Dostępne wykłady:</label>
     <select name="lecture" id="lecture" required>
       {% for lecture in lectures %}
       <option value="{{ lecture.lid }}">{{ lecture.title }}</option>
       {% endfor %}
     </select>
-    <button type="submit">Zapisz sie na wyklad</button>
+    <button type="submit">Zapisz się na wykład</button>
   </form>
 </div>
 {% endblock %}

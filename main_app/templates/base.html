@@ -25,7 +25,7 @@
       href="#main-content"
       class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded"
     >
-      Przeskocz do tresci
+      Przeskocz do treści
     </a>
 
     <nav
@@ -56,12 +56,12 @@
             <a
               href="{{ url_for('admin.users') }}"
               class="text-gray-700 hover:text-blue-600 transition"
-              >Uzytkownicy</a
+              >Użytkownicy</a
             >
             <a
               href="{{ url_for('admin.lectures') }}"
               class="text-gray-700 hover:text-blue-600 transition"
-              >Wyklady</a
+              >Wykłady</a
             >
 
             {% elif current_user.role == 'Teacher' %}
@@ -73,7 +73,7 @@
             <a
               href="{{ url_for('teacher.lectures') }}"
               class="text-gray-700 hover:text-blue-600 transition"
-              >Wyklady</a
+              >Wykłady</a
             >
 
             {% elif current_user.role == 'Student' %}
@@ -141,27 +141,24 @@
           <a
             href="{{ url_for('admin.users') }}"
             class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded"
-            >Uzytkownicy</a
+            >Użytkownicy</a
           >
           <a
             href="{{ url_for('admin.lectures') }}"
             class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded"
-            >Wyklady</a
+            >Wykłady</a
           >
-          <a
-            href="{{ url_for('admin.rooms') }}"
-            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded"
-            >Sale</a
-          >
+
           {% elif current_user.role == 'Teacher' %}
           <a
             href="{{ url_for('teacher.dashboard') }}"
             class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded"
             >Panel Sterowania</a
           >
-          <a href="{{ url_for('teacher.lectures') }}"
+          <a
+            href="{{ url_for('teacher.lectures') }}"
             class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded"
-            >Wyklady</a
+            >Wykłady</a
           >
           {% elif current_user.role == 'Student' %}
           <a
@@ -198,8 +195,6 @@
     >
       {% block content %}{% endblock %}
     </main>
-
-
 
     <script>
       document

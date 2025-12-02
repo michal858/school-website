@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %}Dodaj wyklad{% endblock %} {% block
+{% extends "base.html" %} {% block title %}Dodaj wykład{% endblock %} {% block
 extra_css %}
 <link
   rel="stylesheet"
@@ -13,12 +13,12 @@ extra_css %}
     width: 100%;
   "
 >
-  <h1 class="page-title">Dodaj wyklad</h1>
+  <h1 class="page-title">Dodaj wykład</h1>
   <form method="POST">
-    <label for="title">Tytul:</label>
+    <label for="title">Tytuł:</label>
     <input type="text" id="title" name="title" required />
-    <button type="submit">Dodaj wyklad</button>
+    <button type="submit">Dodaj wykład</button>
   </form>
-  <a href="{{ url_for('admin.lectures') }}">Wroc do wykladow</a>
+  <a href="{{ url_for('admin.lectures') }}">Wróć do wykładów</a>
 </div>
 {% endblock %}

@@ -1,11 +1,11 @@
-{% extends "base.html" %} {% block title %}Uzytkownicy{% endblock %} {% block
+{% extends "base.html" %} {% block title %}Użytkownicy{% endblock %} {% block
 extra_css %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/admin.css') }}"
 />
 {% endblock %} {% block content %}
-<h1 class="page-title">Uzytkownicy</h1>
+<h1 class="page-title">Użytkownicy</h1>
 <div
   class="actions-bar"
   style="
@@ -18,7 +18,7 @@ extra_css %}
   "
 >
   <a href="{{ url_for('admin.add_user') }}" style="margin-bottom: 0"
-    >Dodaj uzytkownikow</a
+    >Dodaj użytkowników</a
   >
 
   <form
@@ -55,7 +55,7 @@ extra_css %}
   <table>
     <thead>
       <tr>
-        <th>Imie</th>
+        <th>Imię</th>
         <th>Nazwisko</th>
         <th>Email</th>
         <th>Rola</th>
@@ -71,7 +71,7 @@ extra_css %}
         <td>{{ user.role }}</td>
         <td>
           <a href="{{ url_for('admin.edit_user', uid=user.uid) }}">Edytuj</a>
-          <a href="{{ url_for('admin.delete_user', uid=user.uid) }}">Usun</a>
+          <a href="{{ url_for('admin.delete_user', uid=user.uid) }}">Usuń</a>
         </td>
       </tr>
       {% endfor %}
@@ -114,11 +114,11 @@ extra_css %}
       text-decoration: none;
       color: #1e293b;
     "
-    >Nastepna &raquo;</a
+    >Następna &raquo;</a
   >
   {% endif %}
 </div>
 
 {% else %}
-<p>Nie znaleziono zadnych uzytkownikow</p>
+<p>Nie znaleziono żadnych użytkowników</p>
 {% endif %} {% endblock %}

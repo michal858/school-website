@@ -1,11 +1,11 @@
-{% extends "base.html" %} {% block title %}Zapisane Wyklady{% endblock %} {%
+{% extends "base.html" %} {% block title %}Zapisane Wykłady{% endblock %} {%
 block extra_css %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/admin.css') }}"
 />
 {% endblock %} {% block content %}
-<h1 class="page-title">Zapisane Wyklady</h1>
+<h1 class="page-title">Zapisane Wykłady</h1>
 <div
   class="actions-bar"
   style="
@@ -21,7 +21,7 @@ block extra_css %}
     href="{{ url_for('students.pick_lecture') }}"
     class="btn-add"
     style="margin-bottom: 0"
-    >Dodaj wyklad</a
+    >Dodaj wykład</a
   >
 
   <form
@@ -58,7 +58,7 @@ block extra_css %}
   <table>
     <thead>
       <tr>
-        <th>Tytul</th>
+        <th>Tytuł</th>
         <th>Akcje</th>
       </tr>
     </thead>
@@ -78,5 +78,5 @@ block extra_css %}
   </table>
 </div>
 {% else %}
-<p>Nie znaleziono zadnych wykladow</p>
+<p>Nie znaleziono żadnych wykładów</p>
 {% endif %} {% endblock %}
