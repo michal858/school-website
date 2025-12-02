@@ -1,6 +1,6 @@
 :root {
-  --primary-gradient-start: #667eea;
-  --primary-gradient-end: #764ba2;
+  --primary-gradient-start: #1566c0;
+  --primary-gradient-end: #0d47a1;
   --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
     0 2px 4px -2px rgb(0 0 0 / 0.1);
   --card-shadow-hover: 0 10px 15px -3px rgb(0 0 0 / 0.1),
@@ -57,7 +57,7 @@ nav a::after {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1566c0 0%, #0d47a1 100%);
   transition: width 0.3s ease;
 }
 
@@ -66,14 +66,14 @@ nav a:hover::after {
 }
 
 nav a.bg-blue-600 {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1566c0 0%, #0d47a1 100%);
   border: none;
 }
 
 nav a.bg-blue-600:hover {
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  background: linear-gradient(135deg, #0d47a1 0%, #1566c0 100%);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 12px rgba(21, 102, 192, 0.4);
 }
 
 .card {
@@ -90,7 +90,7 @@ nav a.bg-blue-600:hover {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1566c0 0%, #0d47a1 100%);
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
@@ -112,8 +112,8 @@ nav a.bg-blue-600:hover {
 
 .btn-secondary {
   background: white;
-  color: #667eea;
-  border: 2px solid #667eea;
+  color: #1566c0;
+  border: 2px solid #1566c0;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
   font-weight: 600;
@@ -122,10 +122,10 @@ nav a.bg-blue-600:hover {
 }
 
 .btn-secondary:hover {
-  background: #667eea;
+  background: #1566c0;
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(21, 102, 192, 0.3);
 }
 
 table {
@@ -134,7 +134,7 @@ table {
 }
 
 thead {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1566c0 0%, #0d47a1 100%);
 }
 
 thead th {
@@ -174,8 +174,8 @@ input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #1566c0;
+  box-shadow: 0 0 0 3px rgba(21, 102, 192, 0.1);
 }
 
 .alert {
@@ -235,7 +235,7 @@ textarea:focus {
 }
 
 .dashboard-card.card-primary {
-  border-top-color: #667eea;
+  border-top-color: #1566c0;
 }
 
 .dashboard-card.card-success {
@@ -251,17 +251,17 @@ textarea:focus {
 }
 
 .stat-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1566c0 0%, #0d47a1 100%);
   color: white;
   border-radius: 1rem;
   padding: 1.5rem;
-  box-shadow: 0 10px 15px -3px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 10px 15px -3px rgba(21, 102, 192, 0.3);
   transition: all 0.3s ease;
 }
 
 .stat-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 20px 25px -5px rgba(21, 102, 192, 0.4);
 }
 
 .stat-number {
@@ -336,7 +336,7 @@ textarea:focus {
 
 .spinner {
   border: 3px solid #f3f4f6;
-  border-top: 3px solid #667eea;
+  border-top: 3px solid #1566c0;
   border-radius: 50%;
   width: 40px;
   height: 40px;

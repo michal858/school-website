@@ -4,7 +4,7 @@ import os
 from .extensions import db, bcrypt, login_manager, migrate
 
 
-def create_app():
+def create_app(test_config=None):
     app = Flask(__name__, template_folder='templates', static_folder='static')
 
     load_dotenv()
@@ -19,6 +19,9 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.secret_key = secret_key
 
+    if test_config:
+        app.config.update(test_config)
+
 
     db.init_app(app)
     bcrypt.init_app(app)
@@ -27,7 +30,7 @@ def create_app():
 
     login_manager.login_view = 'auth.login'
 
-    from main_app.models import User
+    from main_app.models import User, Attendance, Lectures
     @login_manager.user_loader
     def load_user(uid):
         return User.query.get(int(uid))

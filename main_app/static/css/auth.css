@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1566c0 0%, #0d47a1 100%);
 }
 
 .auth-card {
@@ -64,9 +64,9 @@
 
 .auth-card input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #1566c0;
   background-color: white;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 3px rgba(21, 102, 192, 0.1);
 }
 
 .auth-card input::placeholder {
@@ -80,7 +80,7 @@
 .auth-card button[type="submit"] {
   width: 100%;
   padding: 0.875rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1566c0 0%, #0d47a1 100%);
   color: white;
   border: none;
   border-radius: 0.5rem;
@@ -105,14 +105,14 @@
   display: block;
   text-align: center;
   margin-top: 1.5rem;
-  color: #667eea;
+  color: #1566c0;
   font-weight: 500;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .auth-card a:hover {
-  color: #764ba2;
+  color: #0d47a1;
   text-decoration: underline;
 }
 

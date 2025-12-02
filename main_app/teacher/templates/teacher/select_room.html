@@ -1,0 +1,45 @@
+{% extends "base.html" %} {% block title %}Wybierz Salę - {{ lecture.title }}{%
+endblock %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/teacher.css') }}"
+/>
+{% endblock %} {% block content %}
+<div class="container">
+  <div class="header">
+    <a href="{{ url_for('teacher.lectures') }}" class="back-link"
+      >← Wróć do wykładów</a
+    >
+    <h1>{{ lecture.title }}</h1>
+    <p>Wybierz salę, aby sprawdzić obecność</p>
+  </div>
+
+  <div class="lectures-list-card">
+    <table class="lectures-list-table">
+      <thead>
+        <tr>
+          <th>Nazwa Sali</th>
+          <th>Zapisani Uczniowie</th>
+          <th>Akcje</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for room in rooms %}
+        <tr>
+          <td>{{ room.name }}</td>
+          <td>{{ room_counts.get(room.name, 0) }} / {{ room.capacity }}</td>
+          <td>
+            <a
+              href="{{ url_for('teacher.attendance', lecture_id=lecture.lid, room=room.name) }}"
+              class="attendance-btn"
+            >
+              Wybierz
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

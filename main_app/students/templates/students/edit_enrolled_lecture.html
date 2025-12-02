@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %}Edytuj Wyklad{% endblock %} {% block
+{% extends "base.html" %} {% block title %}Edytuj Wykład{% endblock %} {% block
 extra_css %}
 <link
   rel="stylesheet"
@@ -13,15 +13,15 @@ extra_css %}
     width: 100%;
   "
 >
-  <h1>Edytuj Wyklad</h1>
+  <h1>Edytuj Wykład</h1>
   <a
     href="{{ url_for('students.enrolled_lectures') }}"
     style="margin-bottom: 2rem"
-    >Powrot do zapisanych wykladow</a
+    >Powrót do zapisanych wykładów</a
   >
 
   <form method="POST" style="width: 100%">
-    <label for="lecture">Wybierz wyklad:</label>
+    <label for="lecture">Wybierz wykład:</label>
     <select name="lecture" id="lecture" required>
       {% for lecture in lectures %}
       <option value="{{ lecture.lid }}">{{ lecture.title }}</option>

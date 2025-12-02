@@ -1,0 +1,132 @@
+{% extends "base.html" %} {% block title %}Zarządzaj salami{% endblock %} {%
+block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/admin.css') }}"
+/>
+{% endblock %} {% block content %}
+<h1 class="page-title">Zarządzaj salami: {{ lecture.title }}</h1>
+
+<div class="actions-bar" style="margin-bottom: 2rem">
+  <a href="{{ url_for('admin.lectures') }}">Wróć do wykładów</a>
+</div>
+
+<div class="content-section">
+  <h2>Dodaj salę</h2>
+  <form
+    method="POST"
+    action="{{ url_for('admin.manage_rooms', lid=lecture.lid) }}"
+    style="display: flex; gap: 1rem; align-items: flex-end; margin-bottom: 2rem"
+  >
+    <div style="display: flex; flex-direction: column; gap: 0.5rem">
+      <label for="name">Nazwa Sali</label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        placeholder="np. Aula"
+        required
+        style="padding: 0.5rem"
+      />
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 0.5rem">
+      <label for="capacity">Pojemność</label>
+      <input
+        type="number"
+        name="capacity"
+        id="capacity"
+        placeholder="np. 90"
+        required
+        style="padding: 0.5rem"
+      />
+    </div>
+    <button type="submit" style="padding: 0.5rem 1rem; margin: 0">Dodaj</button>
+  </form>
+</div>
+
+<div class="content-section">
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    "
+  >
+    <h2>Dostępne Sale</h2>
+    <form
+      method="POST"
+      action="{{ url_for('admin.assign_rooms', lid=lecture.lid) }}"
+      style="margin: 0; padding: 0; box-shadow: none; background: transparent"
+    >
+      <button type="submit" style="background-color: #1566c0; color: white">
+        Automatycznie Przypisz Uczniów
+      </button>
+    </form>
+  </div>
+
+  {% if rooms %}
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>Nazwa</th>
+          <th>Pojemność</th>
+          <th>Akcje</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for room in rooms %}
+        <tr>
+          <td>{{ room.name }}</td>
+          <td>{{ room.capacity }}</td>
+          <td>
+            <a
+              href="{{ url_for('admin.delete_room', lrid=room.lrid) }}"
+              style="color: #ef4444"
+              >Usuń</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p>Brak dodanych sal.</p>
+  {% endif %}
+</div>
+
+<div class="content-section" style="margin-top: 2rem">
+  <h2>Przypisani uczniowie</h2>
+  <p>Całkowita liczba uczniów: {{ enrollments|length }}</p>
+
+  {% if enrollments %}
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>Uczeń</th>
+          <th>Przypisana sala</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for enrollment in enrollments %}
+        <tr>
+          <td>{{ enrollment.user_id }}</td>
+          <!-- TODO: Join with User to show name -->
+          <td>
+            {% if enrollment.room_assigned %} {{ enrollment.room_assigned }} {%
+            else %}
+            <span style="color: #ef4444">Nieprzypisany</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

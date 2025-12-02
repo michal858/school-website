@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from main_app.roles import role_required
-from main_app.models import User, Lectures
+from main_app.models import User, Lectures, LectureRooms, LectureEnrollment
 from main_app.extensions import db, bcrypt
 
 admin = Blueprint('admin', __name__, template_folder='templates')
@@ -47,7 +47,13 @@ def edit_user(uid:int):
         user.firstName = request.form.get('firstName')
         user.lastName = request.form.get('lastName')
         user.email = request.form.get('email')
-        user.password = bcrypt.generate_password_hash(request.form.get('password')).decode('utf-8')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+
+        if password != confirm_password:
+            return "Passwords do not match"
+
+        user.password = bcrypt.generate_password_hash(password).decode('utf-8')
         user.role = request.form.get('role')
 
         try:
@@ -123,7 +129,12 @@ def edit_lecture(lid:int):
         lecture = Lectures.query.get_or_404(lid)
         lecture.title = request.form.get('title')
         lecture.description = request.form.get('description')
-        lecture.teacher_id = request.form.get('teacher_id')
+
+        teacher_id = request.form.get('teacher_id')
+        if teacher_id:
+            lecture.teacher_id = int(teacher_id)
+        else:
+            lecture.teacher_id = None
 
         try:
             db.session.commit()
@@ -165,3 +176,76 @@ def add_lecture():
         return redirect(url_for('admin.lectures'))
     else:
         return 'Something went wrong'
+
+
+# Manage Rooms
+@admin.route('lectures/rooms/<int:lid>', methods=['GET', 'POST'])
+@role_required('Admin')
+def manage_rooms(lid: int):
+    lecture = Lectures.query.get_or_404(lid)
+
+    if request.method == 'POST':
+        name = request.form.get('name')
+        capacity = request.form.get('capacity')
+
+        room = LectureRooms(lecture_id=lid, name=name, capacity=capacity)
+        try:
+            db.session.add(room)
+            db.session.commit()
+        except Exception as e:
+            return f'ERROR: {e}'
+
+        return redirect(url_for('admin.manage_rooms', lid=lid))
+
+    rooms = LectureRooms.query.filter_by(lecture_id=lid).all()
+    enrollments = LectureEnrollment.query.filter_by(lecture_id=lid).all()
+
+    return render_template('admin/manage_rooms.html', lecture=lecture, rooms=rooms, enrollments=enrollments)
+
+@admin.route('lectures/rooms/delete/<int:lrid>')
+@role_required('Admin')
+def delete_room(lrid: int):
+    room = LectureRooms.query.get_or_404(lrid)
+    lid = room.lecture_id
+    try:
+        db.session.delete(room)
+        db.session.commit()
+    except Exception as e:
+        return f'ERROR: {e}'
+
+    return redirect(url_for('admin.manage_rooms', lid=lid))
+
+@admin.route('lectures/assign_rooms/<int:lid>', methods=['POST'])
+@role_required('Admin')
+def assign_rooms(lid: int):
+    rooms = LectureRooms.query.filter_by(lecture_id=lid).order_by(LectureRooms.capacity.desc()).all()
+    enrollments = LectureEnrollment.query.filter_by(lecture_id=lid).all()
+
+    if not rooms:
+        return "No rooms available for this lecture."
+
+    current_room_idx = 0
+    current_room_count = 0
+
+    # Reset all assignments first? Or just overwrite?
+    # Let's overwrite.
+
+    for enrollment in enrollments:
+        if current_room_idx >= len(rooms):
+            # No more rooms available
+            enrollment.room_assigned = "Overflow" # or None
+        else:
+            room = rooms[current_room_idx]
+            enrollment.room_assigned = room.name
+            current_room_count += 1
+
+            if current_room_count >= room.capacity:
+                current_room_idx += 1
+                current_room_count = 0
+
+    try:
+        db.session.commit()
+    except Exception as e:
+        return f'ERROR: {e}'
+
+    return redirect(url_for('admin.manage_rooms', lid=lid))
