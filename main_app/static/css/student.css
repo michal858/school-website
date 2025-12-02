@@ -11,7 +11,7 @@ h2:last-of-type {
   padding: 1.25rem 1.75rem;
   border-radius: 0.75rem;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  border-left: 4px solid #667eea;
+  border-left: 4px solid #1566c0;
   display: inline-block;
   color: #1e293b;
   animation: fadeInUp 1s ease;
@@ -87,9 +87,9 @@ h2:last-of-type::before {
 }
 
 .dashboard-link:hover {
-  border-color: #667eea;
+  border-color: #1566c0;
   transform: translateY(-4px);
-  box-shadow: 0 12px 20px -5px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 12px 20px -5px rgba(21, 102, 192, 0.3);
 }
 
 .dashboard-link .link-icon {

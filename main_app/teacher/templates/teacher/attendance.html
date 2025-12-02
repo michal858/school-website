@@ -7,11 +7,13 @@ endblock %} {% block extra_css %}
 {% endblock %} {% block content %}
 <div class="container">
   <div class="header">
-    <a href="{{ url_for('teacher.dashboard') }}" class="back-link"
-      >← Panel Sterowania</a
-    >
+    {% if room_name %}
+        <a href="{{ url_for('teacher.attendance', lecture_id=lecture.lid) }}" class="back-link">← Zmien Sale</a>
+    {% else %}
+        <a href="{{ url_for('teacher.dashboard') }}" class="back-link">← Panel Sterowania</a>
+    {% endif %}
     <h1>{{ lecture.title }}</h1>
-    <p>Obecnosc</p>
+    <p>Obecnosc {% if room_name %}- Sala: {{ room_name }}{% endif %}</p>
   </div>
 
   <div class="students-card">
@@ -22,7 +24,7 @@ endblock %} {% block extra_css %}
 
     {% if enrolled_students %}
     <div class="table-responsive">
-      <form method="POST">
+      <form method="POST" action="{{ url_for('teacher.attendance', lecture_id=lecture.lid, room=room_name) }}">
         <table class="students-table">
           <thead>
             <tr>
