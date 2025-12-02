@@ -10,7 +10,7 @@ endblock %} {% block extra_css %}
     {% if room_name %}
         <a href="{{ url_for('teacher.attendance', lecture_id=lecture.lid) }}" class="back-link">← Zmien Sale</a>
     {% else %}
-        <a href="{{ url_for('teacher.dashboard') }}" class="back-link">← Panel Sterowania</a>
+        <a href="{{ url_for('teacher.lectures') }}" class="back-link">← Wykłady</a>
     {% endif %}
     <h1>{{ lecture.title }}</h1>
     <p>Obecnosc {% if room_name %}- Sala: {{ room_name }}{% endif %}</p>
@@ -18,7 +18,7 @@ endblock %} {% block extra_css %}
 
   <div class="students-card">
     <h2>
-      Zapisani ucznowie
+      Zapisani uczniowie
       <span class="student-count">{{ enrolled_students|length }}</span>
     </h2>
 

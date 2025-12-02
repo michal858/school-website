@@ -70,6 +70,11 @@
               class="text-gray-700 hover:text-blue-600 transition"
               >Panel Sterowania</a
             >
+            <a
+              href="{{ url_for('teacher.lectures') }}"
+              class="text-gray-700 hover:text-blue-600 transition"
+              >Wyklady</a
+            >
 
             {% elif current_user.role == 'Student' %}
             <a
@@ -143,11 +148,20 @@
             class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded"
             >Wyklady</a
           >
+          <a
+            href="{{ url_for('admin.rooms') }}"
+            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded"
+            >Sale</a
+          >
           {% elif current_user.role == 'Teacher' %}
           <a
             href="{{ url_for('teacher.dashboard') }}"
             class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded"
             >Panel Sterowania</a
+          >
+          <a href="{{ url_for('teacher.lectures') }}"
+            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded"
+            >Wyklady</a
           >
           {% elif current_user.role == 'Student' %}
           <a
