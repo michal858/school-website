@@ -25,6 +25,10 @@ class Lectures(db.Model):
 
     lid = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('users.uid'), nullable=True)
+
+    teacher = db.relationship('User', backref='lectures_taught')
 
 
     def __repr__(self):
@@ -32,11 +36,6 @@ class Lectures(db.Model):
 
     def get_id(self):
         return self.lid
-
-
-
-    def get_id(self):
-        return self.leid
 
 
 class LectureRooms(db.Model):
@@ -58,11 +57,12 @@ class LectureEnrollment(db.Model):
 
     leid = db.Column(db.Integer, primary_key=True)
     lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.lid'), nullable=False)
-    user_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.uid'), nullable=False)
     room_assigned = db.Column(db.String(100), nullable=True)
 
     # Relationship to access the lecture details
     lecture = db.relationship('Lectures', backref='enrollments')
+    user = db.relationship('User', backref='enrollments')
 
     def __repr__(self):
         return f"<LectureEnrollment: {self.user_id} {self.lecture_id}>"
@@ -76,11 +76,12 @@ class Attendance(db.Model):
 
     aid = db.Column(db.Integer, primary_key=True)
     lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.lid'), nullable=False)
-    user_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.uid'), nullable=False)
     attendance = db.Column(db.String(50), nullable=False, default='obecny')
 
     # Relationship to access the lecture details
     lecture = db.relationship('Lectures', backref='attendance')
+    user = db.relationship('User', backref='attendance')
 
     def __repr__(self):
         return f"<Attendance: {self.user_id} {self.lecture_id}>"

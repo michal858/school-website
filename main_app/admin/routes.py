@@ -47,7 +47,13 @@ def edit_user(uid:int):
         user.firstName = request.form.get('firstName')
         user.lastName = request.form.get('lastName')
         user.email = request.form.get('email')
-        user.password = bcrypt.generate_password_hash(request.form.get('password')).decode('utf-8')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+
+        if password != confirm_password:
+            return "Passwords do not match"
+
+        user.password = bcrypt.generate_password_hash(password).decode('utf-8')
         user.role = request.form.get('role')
 
         try:
@@ -123,7 +129,12 @@ def edit_lecture(lid:int):
         lecture = Lectures.query.get_or_404(lid)
         lecture.title = request.form.get('title')
         lecture.description = request.form.get('description')
-        lecture.teacher_id = request.form.get('teacher_id')
+
+        teacher_id = request.form.get('teacher_id')
+        if teacher_id:
+            lecture.teacher_id = int(teacher_id)
+        else:
+            lecture.teacher_id = None
 
         try:
             db.session.commit()

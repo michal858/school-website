@@ -1,13 +1,13 @@
 {% extends "base.html" %}
-{% block title %}Wyklady{% endblock %}
+{% block title %}Wykłady{% endblock %}
 {% block extra_css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/teacher.css') }}">
 {% endblock %}
 {% block content %}
 <div class="container">
     <div class="header">
-        <h1>Wyklady</h1>
-        <p>Zarzadzaj obecnoscia na wykladzie</p>
+        <h1>Wykłady</h1>
+        <p>Zarządzaj obecnościa na wykładzie</p>
     </div>
 
     <div class="lectures-list-card">
@@ -16,7 +16,7 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Tytul wykladu</th>
+                    <th>Tytuł wykładu</th>
                     <th>Akcje</th>
                 </tr>
             </thead>
@@ -27,7 +27,7 @@
                     <td>{{ lecture.title }}</td>
                     <td>
                         <a href="{{ url_for('teacher.attendance', lecture_id=lecture.lid) }}" class="attendance-btn">
-                            Sprawdz Obecnosc
+                            Sprawdź Obecność
                         </a>
                     </td>
                 </tr>
@@ -37,7 +37,7 @@
         {% else %}
         <div class="no-lectures">
             <div class="no-lectures-icon">📚</div>
-            <p>Nie posiadasz zadnych przypisanych wykladow.</p>
+            <p>Nie posiadasz żadnych przypisanych wykładów.</p>
         </div>
         {% endif %}
     </div>

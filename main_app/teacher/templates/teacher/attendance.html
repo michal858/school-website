@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %}Obecnosc - {{ lecture.title }}{%
+{% extends "base.html" %} {% block title %}Obecność - {{ lecture.title }}{%
 endblock %} {% block extra_css %}
 <link
   rel="stylesheet"
@@ -8,17 +8,17 @@ endblock %} {% block extra_css %}
 <div class="container">
   <div class="header">
     {% if room_name %}
-        <a href="{{ url_for('teacher.attendance', lecture_id=lecture.lid) }}" class="back-link">← Zmien Sale</a>
+        <a href="{{ url_for('teacher.attendance', lecture_id=lecture.lid) }}" class="back-link">← Zmień Salę</a>
     {% else %}
-        <a href="{{ url_for('teacher.dashboard') }}" class="back-link">← Panel Sterowania</a>
+        <a href="{{ url_for('teacher.lectures') }}" class="back-link">← Wykłady</a>
     {% endif %}
     <h1>{{ lecture.title }}</h1>
-    <p>Obecnosc {% if room_name %}- Sala: {{ room_name }}{% endif %}</p>
+    <p>Obecność {% if room_name %}- Sala: {{ room_name }}{% endif %}</p>
   </div>
 
   <div class="students-card">
     <h2>
-      Zapisani ucznowie
+      Zapisani uczniowie
       <span class="student-count">{{ enrolled_students|length }}</span>
     </h2>
 
@@ -29,9 +29,9 @@ endblock %} {% block extra_css %}
           <thead>
             <tr>
               <th>#</th>
-              <th>Imie</th>
+              <th>Imię</th>
               <th>Nazwisko</th>
-              <th>Obecnosc</th>
+              <th>Obecność</th>
             </tr>
           </thead>
           <tbody>
@@ -60,7 +60,7 @@ endblock %} {% block extra_css %}
     {% else %}
     <div class="no-students">
       <div class="no-students-icon">📋</div>
-      <p>Zaden z uczniow nie zapisal sie na ten wyklad</p>
+      <p>Żaden z uczniów nie zapisał się na ten wykład</p>
     </div>
     {% endif %}
   </div>

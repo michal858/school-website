@@ -1,7 +1,38 @@
-{% extends "base.html" %} {% block title %}Edytuj uzytkownika{% endblock %} {%
-block extra_css %}
+{% extends "base.html" %} {% block title %}Edytuj użytkownika{% endblock %} {% block
+extra_css %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/admin.css') }}"
 />
-{% endblock %} {% block content %} {% endblock %}
+{% endblock %} {% block content %}
+<div
+  style="
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  "
+>
+  <h1 class="page-title">Edytuj użytkownika</h1>
+  <form method="POST">
+    <label for="firstName">Imię:</label>
+    <input type="text" id="firstName" name="firstName" value="{{ user.firstName }}" required />
+    <label for="lastName">Nazwisko:</label>
+    <input type="text" id="lastName" name="lastName" value="{{ user.lastName }}" required />
+    <label for="email">Adres e-mail:</label>
+    <input type="email" id="email" name="email" value="{{ user.email }}" required />
+    <label for="role">Rola:</label>
+    <select id="role" name="role">
+      <option value="Admin" {% if user.role == 'Admin' %}selected{% endif %}>Administrator</option>
+      <option value="Teacher" {% if user.role == 'Teacher' %}selected{% endif %}>Nauczyciel</option>
+      <option value="Student" {% if user.role == 'Student' %}selected{% endif %}>Uczeń</option>
+    </select>
+    <label for="password">Nowe hasło:</label>
+    <input type="password" id="password" name="password" required />
+    <label for="confirm_password">Powtórz hasło:</label>
+    <input type="password" id="confirm_password" name="confirm_password" required />
+    <button type="submit">Zapisz zmiany</button>
+  </form>
+  <a href="{{ url_for('admin.users') }}">Wróć do użytkowników</a>
+</div>
+{% endblock %}

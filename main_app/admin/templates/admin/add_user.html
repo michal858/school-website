@@ -15,7 +15,7 @@ extra_css %}
 >
   <h1 class="page-title">Dodaj ucznia</h1>
   <form method="POST">
-    <label for="firstName">Imie:</label>
+    <label for="firstName">Imię:</label>
     <input type="text" id="firstName" name="firstName" required />
     <label for="lastName">Nazwisko:</label>
     <input type="text" id="lastName" name="lastName" required />
@@ -25,12 +25,12 @@ extra_css %}
     <select id="role" name="role">
       <option value="Admin">Administrator</option>
       <option value="Teacher">Nauczyciel</option>
-      <option value="Student">Uczen</option>
+      <option value="Student">Uczeń</option>
     </select>
-    <label for="password">Haslo:</label>
+    <label for="password">Hasło:</label>
     <input type="password" id="password" name="password" required />
     <button type="submit">Dodaj ucznia</button>
   </form>
-  <a href="{{ url_for('admin.users') }}">Wroc do uczniow</a>
+  <a href="{{ url_for('admin.users') }}">Wroć do uczniów</a>
 </div>
 {% endblock %}

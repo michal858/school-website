@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %}Wybierz Sale - {{ lecture.title }}{%
+{% extends "base.html" %} {% block title %}Wybierz Salę - {{ lecture.title }}{%
 endblock %} {% block extra_css %}
 <link
   rel="stylesheet"
@@ -8,10 +8,10 @@ endblock %} {% block extra_css %}
 <div class="container">
   <div class="header">
     <a href="{{ url_for('teacher.lectures') }}" class="back-link"
-      >← Wroc do wykladow</a
+      >← Wróć do wykładów</a
     >
     <h1>{{ lecture.title }}</h1>
-    <p>Wybierz sale, aby sprawdzic obecnosc</p>
+    <p>Wybierz salę, aby sprawdzić obecność</p>
   </div>
 
   <div class="lectures-list-card">
@@ -19,7 +19,7 @@ endblock %} {% block extra_css %}
       <thead>
         <tr>
           <th>Nazwa Sali</th>
-          <th>Zapisani Studenci</th>
+          <th>Zapisani Uczniowie</th>
           <th>Akcje</th>
         </tr>
       </thead>

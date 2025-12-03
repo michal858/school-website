@@ -1,18 +1,18 @@
-{% extends "base.html" %} {% block title %}Zarzadzaj Salami{% endblock %} {%
+{% extends "base.html" %} {% block title %}Zarządzaj salami{% endblock %} {%
 block extra_css %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/admin.css') }}"
 />
 {% endblock %} {% block content %}
-<h1 class="page-title">Zarzadzaj Salami: {{ lecture.title }}</h1>
+<h1 class="page-title">Zarządzaj salami: {{ lecture.title }}</h1>
 
 <div class="actions-bar" style="margin-bottom: 2rem">
-  <a href="{{ url_for('admin.lectures') }}">Wroc do wykladow</a>
+  <a href="{{ url_for('admin.lectures') }}">Wróć do wykładów</a>
 </div>
 
 <div class="content-section">
-  <h2>Dodaj Sale</h2>
+  <h2>Dodaj salę</h2>
   <form
     method="POST"
     action="{{ url_for('admin.manage_rooms', lid=lecture.lid) }}"
@@ -30,7 +30,7 @@ block extra_css %}
       />
     </div>
     <div style="display: flex; flex-direction: column; gap: 0.5rem">
-      <label for="capacity">Pojemnosc</label>
+      <label for="capacity">Pojemność</label>
       <input
         type="number"
         name="capacity"
@@ -53,14 +53,14 @@ block extra_css %}
       margin-bottom: 1rem;
     "
   >
-    <h2>Dostepne Sale</h2>
+    <h2>Dostępne Sale</h2>
     <form
       method="POST"
       action="{{ url_for('admin.assign_rooms', lid=lecture.lid) }}"
       style="margin: 0; padding: 0; box-shadow: none; background: transparent"
     >
       <button type="submit" style="background-color: #1566c0; color: white">
-        Automatycznie Przypisz Studentow
+        Automatycznie Przypisz Uczniów
       </button>
     </form>
   </div>
@@ -71,7 +71,7 @@ block extra_css %}
       <thead>
         <tr>
           <th>Nazwa</th>
-          <th>Pojemnosc</th>
+          <th>Pojemność</th>
           <th>Akcje</th>
         </tr>
       </thead>
@@ -84,7 +84,7 @@ block extra_css %}
             <a
               href="{{ url_for('admin.delete_room', lrid=room.lrid) }}"
               style="color: #ef4444"
-              >Usun</a
+              >Usuń</a
             >
           </td>
         </tr>
@@ -98,16 +98,16 @@ block extra_css %}
 </div>
 
 <div class="content-section" style="margin-top: 2rem">
-  <h2>Przypisani Studenci</h2>
-  <p>Lacznie zapisanych: {{ enrollments|length }}</p>
+  <h2>Przypisani uczniowie</h2>
+  <p>Całkowita liczba uczniów: {{ enrollments|length }}</p>
 
   {% if enrollments %}
   <div class="table-responsive">
     <table>
       <thead>
         <tr>
-          <th>Student</th>
-          <th>Przypisana Sala</th>
+          <th>Uczeń</th>
+          <th>Przypisana sala</th>
         </tr>
       </thead>
       <tbody>
