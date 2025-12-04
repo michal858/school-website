@@ -11,19 +11,19 @@ extra_css %}
     <span class="user-role">{{ current_user.role }}</span>
   </div>
 
-  <p>Zalogowano pomyslnie do systemu zarzadzania szkola.</p>
+  <p>Zalogowano pomyślnie do systemu zarządzania szkołą.</p>
 
   {% if current_user.role == 'Admin' %}
   <a href="{{ url_for('admin.dashboard') }}" class="dashboard-link"
-    >Przejdz do Panelu Administratora</a
+    >Przejdź do Panelu Administratora</a
   >
   {% elif current_user.role == 'Teacher' %}
   <a href="{{ url_for('teacher.dashboard') }}" class="dashboard-link"
-    >Przejdz do Panelu Nauczyciela</a
+    >Przejdź do Panelu Nauczyciela</a
   >
   {% elif current_user.role == 'Student' %}
   <a href="{{ url_for('students.dashboard') }}" class="dashboard-link"
-    >Przejdz do Panelu Ucznia</a
+    >Przejdź do Panelu Ucznia</a
   >
   {% endif %}
 </section>
@@ -31,50 +31,50 @@ extra_css %}
 <section class="home-features">
   <div class="feature-card">
     <div class="feature-icon">📚</div>
-    <h3>Wyklady</h3>
-    <p>Zarzadzaj wykladami i materiałami edukacyjnymi</p>
+    <h3>Wykłady</h3>
+    <p>Zarządzaj wykładami i materiałami edukacyjnymi</p>
   </div>
   <div class="feature-card">
     <div class="feature-icon">👥</div>
-    <h3>Uzytkownicy</h3>
-    <p>System dla uczniow, nauczycieli i administratorow</p>
+    <h3>Użytkownicy</h3>
+    <p>System dla uczniów, nauczycieli i administratorów</p>
   </div>
   <div class="feature-card">
     <div class="feature-icon">📊</div>
-    <h3>Obecnosc</h3>
-    <p>Sledzenie obecnosci i postepow w nauce</p>
+    <h3>Obecność</h3>
+    <p>Sledzenie obecności i postępów w nauce</p>
   </div>
 </section>
 {% else %}
 <section class="home-hero">
   <h1>SchoolWeb</h1>
-  <h2>System Zarzadzania Szkola</h2>
+  <h2>System Zarządzania Szkołą</h2>
   <p>
-    Nowoczesna platforma do zarzadzania wykladami, uzytkownikami i obecnoscia.
-    Zaloguj sie lub zarejestruj, aby rozpoczac.
+    Nowoczesna platforma do zarządzania wykładami, użytkownikami i obecnością.
+    Zaloguj się lub zarejestruj, aby rozpocząć.
   </p>
 
   <div class="home-actions">
-    <a href="{{ url_for('auth.login') }}">Zaloguj sie</a>
-    <a href="{{ url_for('auth.signup') }}" class="secondary">Zarejestruj sie</a>
+    <a href="{{ url_for('auth.login') }}">Zaloguj się</a>
+    <a href="{{ url_for('auth.signup') }}" class="secondary">Zarejestruj się</a>
   </div>
 </section>
 
 <section class="home-features">
   <div class="feature-card">
     <div class="feature-icon">🎓</div>
-    <h3>Dla Uczniow</h3>
-    <p>Zapisuj sie na wyklady i sledz swoje postepy</p>
+    <h3>Dla Uczniów</h3>
+    <p>Zapisuj się na wykłady i sledź swoje postępy</p>
   </div>
   <div class="feature-card">
     <div class="feature-icon">👨‍🏫</div>
     <h3>Dla Nauczycieli</h3>
-    <p>Zarzadzaj wykladami i monitoruj obecnosc</p>
+    <p>Zarządzaj wykładami i monitoruj obecność</p>
   </div>
   <div class="feature-card">
     <div class="feature-icon">⚙️</div>
-    <h3>Dla Administratorow</h3>
-    <p>Pelna kontrola nad systemem i uzytkownikami</p>
+    <h3>Dla Administratorów</h3>
+    <p>Pełna kontrola nad systemem i użytkownikami</p>
   </div>
 </section>
 {% endif %} {% endblock %}
