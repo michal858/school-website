@@ -1,0 +1,64 @@
+{% extends "base.html" %} {% block title %}Błąd {{ error }}{% endblock %} {%
+block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/error.css') }}"
+/>
+{% endblock %} {% block content %}
+<div class="error-container">
+  <div class="error-card">
+    <div class="error-icon">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+        />
+      </svg>
+    </div>
+
+    <h1 class="text-4xl font-bold text-gray-900 mb-2">
+      {% if error == 404 %} 404 {% elif error == 500 %} 500 {% elif error == 403
+      %} 403 {% elif error == 401 %} 401 {% else %} Błąd {% endif %}
+    </h1>
+
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">
+      {% if error == 404 %} Strona nie została znaleziona {% elif error == 500
+      %} Wystąpił błąd serwera {% elif error == 403 %} Brak dostępu {% elif
+      error == 401 %} Wymagane logowanie {% elif error %} {{ error }} {% else %}
+      Coś poszło nie tak {% endif %}
+    </h2>
+
+    <p class="text-gray-500 mb-8">
+      {% if error == 404 %} Przepraszamy, ale strona której szukasz nie istnieje
+      lub została przeniesiona. {% elif error == 500 %} Przepraszamy, wystąpił
+      nieoczekiwany błąd po stronie serwera. {% elif error == 403 %} Nie masz
+      wystarczających uprawnień, aby zobaczyć tę stronę. {% elif error == 401 %}
+      Musisz się zalogować, aby uzyskać dostęp do tej zawartości. {% else %}
+      Wystąpił nieoczekiwany błąd. Spróbuj ponownie później. {% endif %}
+    </p>
+
+    <div class="flex flex-col space-y-3">
+      <a
+        href="#"
+        onclick="history.back(); return false;"
+        class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5 duration-200"
+      >
+        Wróć do poprzedniej strony
+      </a>
+      <a
+        href="{{ url_for('home.index') }}"
+        class="w-full bg-white text-gray-700 border border-gray-300 px-6 py-3 rounded-lg hover:bg-gray-50 transition font-medium"
+      >
+        Strona główna
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

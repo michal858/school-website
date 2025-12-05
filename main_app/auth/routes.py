@@ -1,9 +1,16 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, login_user, logout_user, current_user
 from main_app.extensions import db, bcrypt
 from main_app.models import User
 
 auth = Blueprint('auth', __name__, template_folder='templates')
+
+@auth.after_request
+def add_header(response):
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '-1'
+    return response
 
 @auth.route('/', methods=['GET', 'POST'])
 def login():
@@ -31,11 +38,12 @@ def login():
             elif user.role == 'Student':
                 return redirect(url_for('students.dashboard'))
             else:
-                return "Unknown user role"
+                return render_template('error.html', error="Unknown user role")
         else:
-            return "Wrong Email or Password"
+            flash("Wrong Email or Password", 'error')
+            return redirect(url_for('auth.login'))
     else:
-        return "Something went wrong"
+        return render_template('error.html')
 
 
 @auth.route('/signup', methods=['GET','POST'])
@@ -56,14 +64,19 @@ def signup():
         password = request.form.get('password')
 
         if User.query.filter_by(email=email).first():
-            return "User with that email already exists."
+            flash("User with that email already exists.", 'error')
+            return redirect(url_for('auth.signup'))
 
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
         user = User(firstName=firstName, lastName=lastName, password=hashed_password, email=email)
 
-        db.session.add(user)
-        db.session.commit()
+        try:
+            db.session.add(user)
+            db.session.commit()
+        except Exception as e:
+            flash(f"Error: {e}", 'error')
+            return redirect(url_for('auth.signup'))
 
         login_user(user)
         if user.role == 'Admin':
@@ -73,13 +86,13 @@ def signup():
         elif user.role == 'Student':
             return redirect(url_for('students.dashboard'))
         else:
-            return "Unknown user role"
+            return render_template('error.html', error="Unknown user role")
 
-    return "Something went wrong"
+    return render_template('error.html')
 
 @auth.route('/forgot_password')
 def forgot_password():
-    return "Forgot password"
+    return render_template('auth/forgot_password.html')
 
 
 @auth.route('/logout')
