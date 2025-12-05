@@ -61,7 +61,7 @@ def attendance(lecture_id):
         db.session.commit()
         # Redirect back to the same room view if applicable
         if room_name:
-             return redirect(url_for('teacher.attendance', lecture_id=lecture_id, room=room_name))
+            return redirect(url_for('teacher.attendance', lecture_id=lecture_id, room=room_name))
         return redirect(url_for('teacher.lectures'))
 
     elif request.method == 'GET':
@@ -80,3 +80,6 @@ def attendance(lecture_id):
         attendance_map = {record.user_id: record.attendance for record in attendance_records}
 
         return render_template('teacher/attendance.html', lecture=lecture, enrolled_students=enrolled_students, attendance_map=attendance_map, room_name=room_name)
+
+    else:
+        return render_template('error.html')

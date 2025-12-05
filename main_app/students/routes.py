@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user
 from main_app.roles import role_required
 from main_app.models import Lectures, LectureEnrollment
@@ -29,10 +29,11 @@ def pick_lecture():
             db.session.commit()
             return redirect(url_for('students.enrolled_lectures'))
         except Exception as e:
-            return f'ERROR: {e}'
+            flash(f'ERROR: {e}', 'error')
+            return redirect(url_for('students.pick_lecture'))
 
     else:
-        return 'Something went wrong'
+        return render_template('error.html')
 
 
 @students.route('/enrolled_lectures')
@@ -64,7 +65,8 @@ def edit_enrolled_lecture(leid:int):
             db.session.commit()
             return redirect(url_for('students.enrolled_lectures'))
         except Exception as e:
-            return f'ERROR: {e}'
+            flash(f'ERROR: {e}', 'error')
+            return redirect(url_for('students.edit_enrolled_lecture', leid=leid))
 
     else:
-        return 'Something went wrong'
+        return render_template('error.html')

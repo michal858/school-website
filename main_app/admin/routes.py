@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from main_app.roles import role_required
 from main_app.models import User, Lectures, LectureRooms, LectureEnrollment
 from main_app.extensions import db, bcrypt
@@ -51,7 +51,8 @@ def edit_user(uid:int):
         confirm_password = request.form.get('confirm_password')
 
         if password != confirm_password:
-            return "Passwords do not match"
+            flash("Passwords do not match", 'error')
+            return redirect(url_for('admin.edit_user', uid=uid))
 
         user.password = bcrypt.generate_password_hash(password).decode('utf-8')
         user.role = request.form.get('role')
@@ -60,10 +61,11 @@ def edit_user(uid:int):
             db.session.commit()
             return redirect(url_for('admin.users'))
         except Exception as e:
-            return f'ERROR: {e}'
+            flash(f'ERROR: {e}', 'error')
+            return redirect(url_for('admin.edit_user', uid=uid))
 
     else:
-        return 'Something went wrong'
+        return render_template('error.html')
 
 # Delete User
 @admin.route('users/delete/<int:uid>', methods=['POST', 'GET'])
@@ -75,7 +77,8 @@ def delete_user(uid:int):
         db.session.commit()
         return redirect(url_for('admin.users'))
     except Exception as e:
-        return f'ERROR: {e}'
+        flash(f'ERROR: {e}', 'error')
+        return redirect(url_for('admin.users'))
 
 # Add User
 @admin.route('users/add', methods=['POST', 'GET'])
@@ -95,7 +98,8 @@ def add_user():
             db.session.add(user)
             db.session.commit()
         except Exception as e:
-            return f'ERROR: {e}'
+            flash(f'ERROR: {e}', 'error')
+            return redirect(url_for('admin.add_user'))
 
         return redirect(url_for('admin.users'))
 
@@ -143,7 +147,7 @@ def edit_lecture(lid:int):
             return f'ERROR: {e}'
 
     else:
-        return 'Something went wrong'
+        return render_template('error.html')
 
 # Delete Lecture
 @admin.route('lectures/delete/<int:lid>', methods=['POST', 'GET'])
@@ -155,7 +159,8 @@ def delete_lecture(lid:int):
         db.session.commit()
         return redirect(url_for('admin.lectures'))
     except Exception as e:
-        return f'ERROR: {e}'
+        flash(f'ERROR: {e}', 'error')
+        return redirect(url_for('admin.lectures'))
 
 # Add Lecture
 @admin.route('lectures/add', methods=['POST', 'GET'])
@@ -171,11 +176,12 @@ def add_lecture():
             db.session.add(lecture)
             db.session.commit()
         except Exception as e:
-            return f'ERROR: {e}'
+            flash(f'ERROR: {e}', 'error')
+            return redirect(url_for('admin.add_lecture'))
 
         return redirect(url_for('admin.lectures'))
     else:
-        return 'Something went wrong'
+        return render_template('error.html')
 
 
 # Manage Rooms
@@ -193,14 +199,17 @@ def manage_rooms(lid: int):
             db.session.add(room)
             db.session.commit()
         except Exception as e:
-            return f'ERROR: {e}'
+            flash(f'ERROR: {e}', 'error')
+            return redirect(url_for('admin.manage_rooms', lid=lid))
 
         return redirect(url_for('admin.manage_rooms', lid=lid))
+    elif request.method == 'GET':
+        rooms = LectureRooms.query.filter_by(lecture_id=lid).all()
+        enrollments = LectureEnrollment.query.filter_by(lecture_id=lid).all()
 
-    rooms = LectureRooms.query.filter_by(lecture_id=lid).all()
-    enrollments = LectureEnrollment.query.filter_by(lecture_id=lid).all()
-
-    return render_template('admin/manage_rooms.html', lecture=lecture, rooms=rooms, enrollments=enrollments)
+        return render_template('admin/manage_rooms.html', lecture=lecture, rooms=rooms, enrollments=enrollments)
+    else:
+        return render_template('error.html')
 
 @admin.route('lectures/rooms/delete/<int:lrid>')
 @role_required('Admin')
@@ -211,7 +220,8 @@ def delete_room(lrid: int):
         db.session.delete(room)
         db.session.commit()
     except Exception as e:
-        return f'ERROR: {e}'
+        flash(f'ERROR: {e}', 'error')
+        return redirect(url_for('admin.manage_rooms', lid=lid))
 
     return redirect(url_for('admin.manage_rooms', lid=lid))
 
@@ -222,7 +232,8 @@ def assign_rooms(lid: int):
     enrollments = LectureEnrollment.query.filter_by(lecture_id=lid).all()
 
     if not rooms:
-        return "No rooms available for this lecture."
+        flash('Brak przypisanych sal do tego wykładu', 'error')
+        return redirect(url_for('admin.manage_rooms', lid=lid))
 
     current_room_idx = 0
     current_room_count = 0
@@ -246,6 +257,7 @@ def assign_rooms(lid: int):
     try:
         db.session.commit()
     except Exception as e:
-        return f'ERROR: {e}'
+        flash(f'ERROR: {e}', 'error')
+        return redirect(url_for('admin.manage_rooms', lid=lid))
 
     return redirect(url_for('admin.manage_rooms', lid=lid))

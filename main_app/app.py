@@ -49,4 +49,18 @@ def create_app(test_config=None):
 
 
 
+    from flask import render_template
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('error.html', error=404), 404
+
+    @app.errorhandler(500)
+    def internal_server_error(e):
+        return render_template('error.html', error=500), 500
+
+    @app.errorhandler(403)
+    def forbidden(e):
+        return render_template('error.html', error=403), 403
+
     return app
